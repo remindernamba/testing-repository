@@ -1,0 +1,10 @@
+<form method="POST">
+{% csrf_token %}
+{{ forms.as_p }}
+Названия
+<input type="text" name="name">
+Описания
+<input type="text" name="message">
+
+<button>Save</button>
+</form>

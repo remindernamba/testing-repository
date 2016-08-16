@@ -1,0 +1,19 @@
+<a href="{% url 'reminders:group' %}">Создать группу</a>	
+<p>{{request.user.username}}</p>
+ {% for i in request.user.profile.all %}
+
+
+Напоминании:
+{% for i in i.reminder.all %}
+  <p>{{ i.name }}    дата: {{ i.date_of_publish }}
+
+<a href="{% url 'reminders:delremind' i.id %}">&times;</a>
+{% endfor %}
+	
+
+{% endfor %}
+<p>Мои группы:</p>
+{% for i in request.user.profile.all %}
+	
+<a href="{% url 'reminders:reminderss' i.id  %}">{{ i.name }}</a>
+{% endfor %} 

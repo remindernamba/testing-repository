@@ -82,7 +82,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'reminder',
         'USER': 'root',
-        'PASSWORD': '12345',
+        'PASSWORD': '123',
 
     }
 }

@@ -1,7 +1,0 @@
-<form method="POST">
-{% csrf_token %}
-{% for i in profile %}
-<input type="checkbox" name="browser" value="{{ i.id }}">{{ i.username }}
-{% endfor %}
-<button>Save</Button>
-</form>

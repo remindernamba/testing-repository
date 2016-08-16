@@ -28,10 +28,10 @@ def add_reminders(request, group_id):
         forms = forms.save(commit=False)
         forms.name = request.POST['name']
         forms.text = request.POST['message']
-        for i in group.user.all():
-            print i
         forms.group = Group.objects.get(pk=int(group_id))
         forms.save()
+        for i in group.user.all():
+            forms.user.add(i.id)
         return redirect('reminders:reminderss', group_idi=group_id)
     return render(request, 'reminder/add_reminder.html', {'forms': forms})
 

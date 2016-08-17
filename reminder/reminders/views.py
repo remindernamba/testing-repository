@@ -23,6 +23,7 @@ def add_group(request):
 def add_reminders(request, group_id):
     forms = CreateIncome()
     forms = CreateIncome(request.POST or None)
+    group = Group.objects.get(pk=group_id)
     if forms.is_valid():
         forms = forms.save(commit=False)
         forms.name = request.POST['name']

@@ -18,6 +18,7 @@ class Group(models.Model):
         verbose_name_plural = _('Группы')
 
 class Reminder(models.Model):
+    user = models.ManyToManyField(Profile, verbose_name=_('Профиль'), default=None, null=True, blank=True)
     name = models.CharField(max_length=50, verbose_name=_('Название'), default=None, null=True, blank=True)
     text = models.TextField(null=True, blank=True)
     date_of_publish = models.DateTimeField(verbose_name=_('Дата Публикации'), default=timezone.now(), null=True, blank=True)

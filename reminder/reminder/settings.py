@@ -37,11 +37,19 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'lettuce.django',
     'profiles',
     'note',
     'komment',
-]
+    'register',
 
+]
+LETTUCE_APPS = (
+    'register',
+)
+
+LETTUCE_TEST_SERVER = 'lettuce.django.server.DjangoServer'
+LETTUCE_SERVER_PORT = 9000
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',

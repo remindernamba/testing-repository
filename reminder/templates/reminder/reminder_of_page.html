@@ -1,0 +1,12 @@
+{{ reminder.name }}
+<a href="{% url 'reminders:delremind' reminder.id %}">Больше не показывать это напоминание</a>
+<form method="POST">
+{% csrf_token %}
+{{ forms.as_p }}
+<button>Save</button>
+</form>
+коментарии
+{% for i in reminder.comments.all %}
+<p>{{ i.title }}  {{ i.text }}</p>
+
+{% endfor %}

@@ -7,6 +7,7 @@ from django.shortcuts import redirect
 from django.contrib import messages
 from profiles import views
 from reminders.forms import CreateIncome
+from komment.forms import CreateComment
 
 
 def add_group(request):
@@ -28,7 +29,7 @@ def add_reminders(request, group_id):
         forms = forms.save(commit=False)
         forms.name = request.POST['name']
         forms.text = request.POST['message']
-        forms.group = Group.objects.get(pk=int(group_id))
+        forms.group = group
         forms.save()
         for i in group.user.all():
             forms.user.add(i.id)
@@ -36,7 +37,7 @@ def add_reminders(request, group_id):
     return render(request, 'reminder/add_reminder.html', {'forms': forms})
 
 
-def reminders_page(request, group_idi):
+def group_page(request, group_idi):
     group_id = int(group_idi)
     profile = Profile.objects.all()
     return render(request, 'reminder/reminder.html', {'gr_id': group_id, 'profiel': profile})
@@ -45,8 +46,8 @@ def reminders_page(request, group_idi):
 def del_remind(request, del_id):
     if 1 == 1:
         delete = Reminder.objects.get(pk=del_id)
-        group = delete.group
-        group.user.remove(request.user)
+        print delete.user.remove(request.user)
+        messages.success(request, 'Вы больше не увидите это напоминания')
         return redirect('profiles:profiles')
     return render(request, 'reminder/delete_reminder.html', {})
 
@@ -64,11 +65,19 @@ def app_profile(request, profile_id):
         for i in profiles:
             messages.success(request, 'Спасибо вы добавили %s' % i)
         return redirect('reminders:reminderss', group_idi=int(profile_id))
-#     group.user.add(pr_id)
     return render(request, 'reminder/add_profile.html', {'profile': profile})
 
 
-# def add_profile(request, pr_id):
-#     group = Group.objects.get(pk=pr_id)
-#     group.user.add(pr_id)
-#     return render(request, 'reminder/add_profiles.html', {})
+def reminder_page(request, rm_page):
+    reminder = Reminder.objects.get(pk=rm_page)
+    forms = CreateComment()
+    forms = CreateComment(request.POST or None)
+    if forms.is_valid():
+        forms = forms.save(commit=False)
+        forms.title = request.POST['title']
+        forms.text = request.POST['text']
+        forms.author = request.user
+        forms.reminder = reminder
+        forms.save()
+        return redirect(request.path)
+    return render(request, 'reminder/reminder_of_page.html', {'reminder': reminder, 'forms': forms})
